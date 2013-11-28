@@ -105,9 +105,11 @@ SendTab.prototype.angular = function (module)
     $scope.check_dt_visibility = function () {
       var send = $scope.send;
 
-      send.show_dt_field = $routeParams.dt
+      send.show_dt_field = ($routeParams.dt
         || send.dt
-        || send.recipient_info.dest_tag_required;
+        || send.recipient_info.dest_tag_required)
+          && !send.bitcoin
+          && !send.federation;
     };
 
     $scope.update_destination = function () {
@@ -142,7 +144,8 @@ SendTab.prototype.angular = function (module)
       var recipient = send.recipient_address;
 
       // Reset federation address validity status
-      $scope.sendForm.send_destination.$setValidity("federation", true);
+      if ($scope.sendForm && $scope.sendForm.send_destination)
+        $scope.sendForm.send_destination.$setValidity("federation", true);
 
       if (send.bitcoin) {
         send.quote_url = Options.bridge.out.bitcoin;
