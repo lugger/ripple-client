@@ -47,6 +47,7 @@ TrustTab.prototype.angular = function (module)
       $scope.editform_visible = false;
       $scope.edituser = '';
       $scope.amount = '';
+      $scope.allowrippling = false;
       $scope.counterparty = '';
       $scope.saveAddressName = '';
       $scope.error_account_reserve = false;
@@ -165,8 +166,11 @@ TrustTab.prototype.angular = function (module)
       var amount = $scope.amount + '/' + currency + '/' + $scope.counterparty_address;
 
       var tx = $network.remote.transaction();
+
+      // Flags
       tx
-        .ripple_line_set($id.account, amount)
+        .rippleLineSet($id.account, amount)
+        .setFlags($scope.allowrippling ? 'ClearNoRipple' : 'NoRipple')
         .on('proposed', function(res){
           $scope.$apply(function () {
             setEngineStatus(res, false);
@@ -279,6 +283,8 @@ TrustTab.prototype.angular = function (module)
       $scope.currency = line.currency;
       $scope.counterparty = line.account;
       $scope.amount = +line.limit.to_text();
+      console.log('line',line);
+      $scope.allowrippling = !line.no_ripple;
 
       // Close/open form. Triggers focus on input.
       $scope.addform_visible = false;
@@ -308,8 +314,6 @@ TrustTab.prototype.angular = function (module)
     $scope.currency_query = webutil.queryFromOptions($scope.currencies);
 
     $scope.reset();
-
-    $rpTracker.track('Page View', {'Page Name': 'Trust'});
   }]);
 };
 

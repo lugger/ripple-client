@@ -26,6 +26,7 @@ require('../services/popup');
 require('../services/rippletxt');
 require('../services/federation');
 require('../services/domainalias');
+require('../services/zipzap');
 
 var app = angular.module('rp', [
   'ng',
@@ -47,7 +48,8 @@ var app = angular.module('rp', [
   'jade',
   'errors',
   // Filters
-  'filters'
+  'filters',
+  'zipzap'
 ]);
 
 // Global reference for debugging only (!)
@@ -68,12 +70,14 @@ app.config(['$routeProvider', '$injector', function ($routeProvider, $injector) 
         $injector.load([tabName]);
       }
       if ("function" === typeof tab.generateHtml) {
+        var template = require('../../jade/index.jade')({template:tab.generateHtml()});
+
         var config = {
           tabName: tabName,
           tabClass: 't-'+tabName,
           pageMode: 'pm-'+tab.pageMode,
           mainMenu: tab.mainMenu,
-          template: tab.generateHtml()
+          template: template
         };
 
         $routeProvider.when('/'+tabName, config);
@@ -141,3 +145,5 @@ app.run(['$rootScope', '$injector', '$compile', '$route', '$routeParams', '$loca
 if (!Options.blobvault) {
   Options.blobvault = Options.BLOBVAULT_SERVER;
 }
+
+angular.resumeBootstrap();

@@ -27,7 +27,8 @@ BalanceTab.prototype.angular = function (module)
     $scope.current_page = 1;
 
     // filter effect types
-    // Show only offer_funded, offer_partially_funded, offer_cancelled, offer_bought side effects
+    // Show only offer_funded, offer_partially_funded, offer_cancelled,
+    // offer_bought, trust_change_no_ripple side effects
     var filterEffects = function (tx) {
       if (!tx) return null;
 
@@ -40,13 +41,14 @@ BalanceTab.prototype.angular = function (module)
           if (effect.type == 'offer_funded'
               || effect.type == 'offer_partially_funded'
               || effect.type == 'offer_bought'
+              || effect.type == 'trust_change_no_ripple'
               || (effect.type === 'offer_canceled' &&
                   event.transaction.type !== 'offercancel')) {
             effects.push(effect);
           }
         });
 
-        event.effects = effects;
+        event.showEffects = effects;
       }
 
       if (effects.length || event.transaction) {
@@ -128,8 +130,6 @@ BalanceTab.prototype.angular = function (module)
       $scope.reset();
       $scope.loadMore();
     });
-
-    $rpTracker.track('Page View', {'Page Name': 'Balance'});
   }]);
 };
 

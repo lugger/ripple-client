@@ -273,7 +273,9 @@
 
   table.events {
     caption {
-      padding: 0 0 0 @grid-gutter-width/2;
+      padding: 0 0 10px @grid-gutter-width/2;
+      text-align: left;
+      font: 16px 'OpenSansRegular';
     }
 
     .date {
@@ -434,6 +436,22 @@ html.t-balance header nav ul > li.active#nav-wallet > a:after {
       margin-top: 20px;
       margin-bottom: 20px;
     }
+
+    .checkbox {
+      margin-bottom: 20px;
+      margin-top: -10px;
+    }
+
+    .allow-rippling{
+      & > label, & > i {
+        float: left;
+      }
+
+      & > i {
+        float: left;
+        margin: -4px 0 0 5px;
+      }
+    }
   }
 
   .mode-confirm {
@@ -461,11 +479,8 @@ html.t-balance header nav ul > li.active#nav-wallet > a:after {
   }
 
   .mode-granted {
-    h2 {
-      .border-radius(10px, 0, 0, 0);
-    }
     .pending h2 {
-      background-color: #fdfdfd;
+      margin: 0;
     }
     .address {
       font-size: 25px;
@@ -532,6 +547,9 @@ html.t-balance header nav ul > li.active#nav-wallet > a:after {
   }
   .errorGroup {
     height: auto;
+  }
+  .tracking {
+    margin: 0 10px 0 0;
   }
 }
 
@@ -1432,5 +1450,64 @@ html.t-trade header nav ul > li.active#nav-advanced > a:after {
       }
     }
   }
+}
 
+#t-cashin {
+  .cashin-list {
+    list-style-type: none;
+    padding: 0;
+
+    .logo {
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .actions {
+      text-align: right;
+    }
+
+    @media (max-width: @screen-xs-max) {
+      .front {
+        text-align: center;
+
+        .actions {
+          text-align: center;
+        }
+      }
+
+      [class*="col-"] {
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+    }
+  }
+  .details {
+    margin-top: 40px;
+  }
+  .locateTxt {
+    margin-bottom: 15px;
+  }
+  .account {
+    list-style-type: none;
+    padding: 0;
+  }
+  .locations {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 15px;
+
+      .name {
+        font-weight: bold;
+      }
+    }
+  }
+  .signup {
+    margin-top: 40px;
+  }
+  .text-error {
+    margin: 10px 0;
+    color: red;
+  }
 }

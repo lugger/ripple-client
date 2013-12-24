@@ -1,9 +1,9 @@
 {
   "name": "ripple-client",
-  "version": "0.2.40",
+  "version": "0.2.41",
   "description": "Client for the Ripple payment network",
   "author": {
-    "name": "OpenCoin, Inc.",
+    "name": "Ripple Labs, Inc.",
     "email": "info@ripple.com",
     "url": "https://ripple.com/"
   },
@@ -23,7 +23,8 @@
     "grunt-preprocess": "~3.0.1",
     "jade": "~0.35.0",
     "jsdom": "~0.8.2",
-    "node-po": "~0.1.2"
+    "jade-l10n": "0.1.x",
+    "jade-l10n-loader": "0.0.x"
   },
   "license": "ISC",
   "scripts": {

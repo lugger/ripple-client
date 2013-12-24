@@ -22,6 +22,10 @@ exports["convert"] = function (callback) {
   callback(require('../tabs/convert'));
 };
 
+exports["cashin"] = function (callback) {
+  callback(require('../tabs/cashin'));
+};
+
 exports["trust"] = function (callback) {
   callback(require('../tabs/trust'));
 };
@@ -49,4 +53,3 @@ exports["security"] = function (callback) {
 exports["tx"] = function (callback) {
   callback(require('../tabs/tx'));
 };
-

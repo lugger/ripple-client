@@ -14,6 +14,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-jade-l10n-extractor');
 
   // Ripple client dependencies
   var deps = ["deps/js/jquery.js",
@@ -119,9 +120,6 @@ module.exports = function(grunt) {
       options: {
         entry: "./src/js/entry/desktop.js",
         module: {
-          loaders: [
-            { test: /\.jade$/, loader: "jade-loader" }
-          ],
           preLoaders: [
             {
               test: /\.js$/,
@@ -152,6 +150,11 @@ module.exports = function(grunt) {
         ]
       },
       desktop: {
+        module: {
+          loaders: [
+            { test: /\.jade$/, loader: "jade-l10n-loader" }
+          ]
+        },
         output: {
           filename: "<%= pkg.name %>-desktop.js"
         },
@@ -160,11 +163,42 @@ module.exports = function(grunt) {
         }
       },
       desktop_debug: {
+        module: {
+          loaders: [
+            { test: /\.jade$/, loader: "jade-l10n-loader" }
+          ]
+        },
         output: {
           filename: "<%= pkg.name %>-desktop-debug.js"
         },
         debug: true,
         devtool: 'eval'
+      },
+      chinese: {
+        module: {
+          loaders: [
+            { test: /\.jade$/, loader: "jade-l10n-loader?languageFile=./l10n/cn/messages.po" }
+          ]
+        },
+        output: {
+          filename: "<%= pkg.name %>-desktop-cn.js"
+        },
+        optimize: {
+          minimize: true
+        }
+      },
+      italian: {
+        module: {
+          loaders: [
+            { test: /\.jade$/, loader: "jade-l10n-loader?languageFile=./l10n/it/messages.po" }
+          ]
+        },
+        output: {
+          filename: "<%= pkg.name %>-desktop-it.js"
+        },
+        optimize: {
+          minimize: true
+        }
       }
     },
     concat: {
@@ -261,7 +295,7 @@ module.exports = function(grunt) {
           {expand: true, src: ['build/dist/*.css'], dest: 'build/bundle/web'},
           {expand: true, src: ['build/dist/*.html'], dest: 'build/bundle/web', flatten: true},
           {expand: true, src: ['fonts/*'], dest: 'build/bundle/web'},
-          {expand: true, src: ['img/*'], dest: 'build/bundle/web'},
+          {expand: true, src: ['img/**'], dest: 'build/bundle/web'},
           {expand: true, src: ['deps/js/modernizr*.js'], dest: 'build/bundle/web'},
           {expand: true, src: ['deps/js/mixpanel.js'], dest: 'build/bundle/web'},
           {src: 'config-example.js', dest: 'build/bundle/web/config-example.js'}
@@ -272,7 +306,7 @@ module.exports = function(grunt) {
           {expand: true, src: ['build/dist/*.js'], dest: 'build/bundle/nw-linux'},
           {expand: true, src: ['build/dist/*.css'], dest: 'build/bundle/nw-linux'},
           {expand: true, src: ['fonts/*'], dest: 'build/bundle/nw-linux'},
-          {expand: true, src: ['img/*'], dest: 'build/bundle/nw-linux'},
+          {expand: true, src: ['img/**'], dest: 'build/bundle/nw-linux'},
           {expand: true, src: ['deps/js/modernizr*.js'], dest: 'build/bundle/nw-linux'},
           {expand: true, src: ['deps/js/mixpanel.js'], dest: 'build/bundle/nw-linux'},
           {src: 'build/dist/index_desktop.html', dest: 'build/bundle/nw-linux/index.html'},
@@ -285,7 +319,7 @@ module.exports = function(grunt) {
           {expand: true, src: ['build/dist/*.js'], dest: 'build/bundle/nw-linux-debug'},
           {expand: true, src: ['build/dist/*.css'], dest: 'build/bundle/nw-linux-debug'},
           {expand: true, src: ['fonts/*'], dest: 'build/bundle/nw-linux-debug'},
-          {expand: true, src: ['img/*'], dest: 'build/bundle/nw-linux-debug'},
+          {expand: true, src: ['img/**'], dest: 'build/bundle/nw-linux-debug'},
           {expand: true, src: ['deps/js/modernizr*.js'], dest: 'build/bundle/nw-linux-debug'},
           {expand: true, src: ['deps/js/mixpanel.js'], dest: 'build/bundle/nw-linux-debug'},
           {src: 'build/dist/index_desktop_debug.html', dest: 'build/bundle/nw-linux-debug/index.html'},
@@ -294,7 +328,7 @@ module.exports = function(grunt) {
         ]
       }
     },
-    l10n: {
+    jade_l10n_extractor: {
       templates: {
         options: {
         },
